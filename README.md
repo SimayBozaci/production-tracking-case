@@ -1,8 +1,12 @@
-#  Production Tracking Dashboard
+# 📊 Production Tracking Dashboard
 
-## Overview
+## Project Overview
 
-Full-stack application that processes production CSV files, validates data quality, stores records, and visualizes KPIs through a dashboard.
+This is a full-stack Production Tracking System developed for the MAGNA technical case study.
+
+The application processes production CSV files, validates data quality using a rule-based engine, stores records in a database, provides KPI analytics via dashboard, and simulates external system synchronization.
+
+The system demonstrates a complete data pipeline: ingestion → validation → storage → API → frontend visualization.
 
 ---
 
@@ -16,77 +20,100 @@ Database: SQLite
 
 ## Architecture
 
-CSV Upload → FastAPI → Validation Engine → SQLite → React Dashboard
+CSV File → FastAPI → Validation Engine → SQLite → REST API → React Dashboard
 
 ---
 
 ## Features
 
-### CSV Upload
-- Upload CSV files via API
-- Automatic parsing with Pandas
-
-### Validation Engine
-- Missing fields check
-- Duplicate record detection
-- OEE & quantity validation rules
+- CSV file upload and processing
+- Rule-based validation engine
 - Row-level error tracking
+- KPI dashboard (total, valid, invalid records)
+- Upload history tracking
+- Server-side filtering (vardiya, iş istasyonu, stok adı)
+- Mock synchronization endpoint (/sync-data)
 
-### Dashboard
-- Total uploads
-- Valid / invalid rows
-- Validation status summary
-- Production records table
+---
 
-### Filtering
-- Shift (Vardiya)
-- Work station
-- Stock name
-- Server-side filtering via API
+## Validation Rules
 
-### Sync Simulation
-- `/sync-data` endpoint
-- Processes only validated records
+- Missing record_id check
+- Duplicate record detection
+- Invalid OEE values
+- Negative production quantities
+- Data consistency checks
 
 ---
 
 ## API Endpoints
 
-POST /upload-csv → Upload CSV file  
-GET /records → Production records (with filters)  
-GET /report → KPI summary  
-GET /uploads → Upload history  
-GET /validation-errors → Validation errors  
-POST /sync-data → Sync simulation  
+POST /upload-csv  
+GET /records  
+GET /report  
+GET /uploads  
+GET /validation-errors  
+POST /sync-data  
 
 ---
 
-## Data Flow
-
-CSV → Upload → Validation → Database → API → Frontend
-
----
-
-## Setup
+## Setup Instructions
 
 ### Backend
 cd backend  
+python -m venv venv  
+source venv/bin/activate  
 pip install -r requirements.txt  
 uvicorn app:app --reload  
+
+Backend runs on: http://127.0.0.1:8000  
+
+Swagger: http://127.0.0.1:8000/docs  
+
+---
 
 ### Frontend
 cd frontend  
 npm install  
 npm run dev  
 
+Frontend runs on: http://localhost:5173  
+
 ---
 
-## Notes
+## Data Flow
 
-- SQLite used for simplicity
-- Sync endpoint is mocked
-- No authentication (out of scope)
-- Focus on full-stack pipeline + validation + dashboard
+CSV Upload → Validation Engine → Database → API → Frontend Dashboard
+
+---
+
+## Screenshots
+
+
+All UI screenshots are stored under the `screenshots/` directory.
+
+
+---
+
+## Limitations
+
+- External API integration is mocked
+- No authentication layer
+- No pagination implemented
+- No advanced analytics charts
+
+---
+
+## Future Improvements
+
+- Authentication & role-based access control
+- Real external API integration
+- Retry & idempotency mechanisms
+- OEE trend charts
+- Pagination & sorting
+- Docker deployment
+- PostgreSQL migration
+- CI/CD pipeline
 
 ---
 
