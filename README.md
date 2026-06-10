@@ -116,7 +116,19 @@ All UI screenshots are stored under the `screenshots/` directory.
 - CI/CD pipeline
 
 ---
+## Run Project
 
+### Backend
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn app:app --reload
+
+### Frontend
+cd frontend
+npm install
+npm run dev
 ## Author
 
 Simay Bozacı  
